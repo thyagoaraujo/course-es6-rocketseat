@@ -1,71 +1,50 @@
 "use strict";
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+var usuarios = [{
+  nome: 'Diego',
+  idade: 23,
+  empresa: 'Rocketseat'
+}, {
+  nome: 'Gabriel',
+  idade: 15,
+  empresa: 'Rocketseat'
+}, {
+  nome: 'Lucas',
+  idade: 30,
+  empresa: 'Facebook'
+}]; //map
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+var idadeUsuarios = usuarios.map(function (item) {
+  return item.idade;
+});
+console.log(idadeUsuarios); //resultado: [23, 15, 30]
+//filter
 
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+var filterRocketseat = usuarios.filter(function (item) {
+  return item.idade >= 18 && item.empresa === 'Rocketseat';
+});
+console.log(filterRocketseat); //resultado: {nome: "Diego", idade: 23, empresa: "Rocketseat"}
+//find
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var findGoogle = usuarios.find(function (item) {
+  return item.empresa === 'Google';
+});
+console.log(findGoogle); //resultado: undefined
+//Unindo operações
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-/* Para testar seus conhecimentos com classes, crie uma classe com nome "Admin", essa classe deve
-extender uma segunda classe chamada "Usuario".
-A classe usuário deve receber dois parâmetros no método construtor, e-mail e senha, e anotá-los
-em propriedades da classe. A classe "Admin" por sua vez não recebe parâmetros mas deve
-repassar os parâmetros de e-mail e senha à classe pai e marcar uma propriedade "admin" como
-true na classe.
-Agora com suas classes formatadas, adicione um método na classe Usuario chamado isAdmin que
-retorna se o usuário é administrador ou não baseado na propriedade admin ser true ou não. */
-var Usuario =
-/*#__PURE__*/
-function () {
-  function Usuario(email, senha) {
-    _classCallCheck(this, Usuario);
-
-    this.email;
-    this.senha;
-  }
-
-  _createClass(Usuario, [{
-    key: "isAdmin",
-    value: function isAdmin() {
-      return this.admin === true;
-    }
-  }]);
-
-  return Usuario;
-}();
-
-var Admin =
-/*#__PURE__*/
-function (_Usuario) {
-  _inherits(Admin, _Usuario);
-
-  function Admin(email, senha) {
-    var _this;
-
-    _classCallCheck(this, Admin);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Admin).call(this, email, senha));
-    _this.admin = true;
-    return _this;
-  }
-
-  return Admin;
-}(Usuario);
-
-var User1 = new Usuario('email@teste.com', 'senha123');
-var Admin1 = new Admin('email@teste.com', 'senha123');
-console.log(User1.isAdmin()); //resposta false
-
-console.log(Admin1.isAdmin()); //resposta true
+var newUsuarios = usuarios.map(function (item) {
+  return _objectSpread({}, item, {
+    idade: item.idade * 2
+  });
+}).filter(function (item) {
+  return item.idade <= 50;
+});
+console.log(newUsuarios);
+/*resultado: 0: {nome: "Diego", idade: 46, empresa: "Rocketseat"}
+             1: {nome: "Gabriel", idade: 30, empresa: "Rocketseat"} */
